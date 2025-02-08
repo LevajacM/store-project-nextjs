@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
@@ -9,7 +10,7 @@ const Logo = () => {
       className='px-0 bg-transparent hover:bg-transparent  shadow-none'
     >
       <Link href='/'>
-        <img src='/home.png' alt='Logo' className='h-12' />
+        <Image src='/home.png' alt='Logo' height={48} width={48} priority />
       </Link>
     </Button>
   );

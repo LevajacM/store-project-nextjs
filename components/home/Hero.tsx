@@ -8,7 +8,7 @@ const Hero = () => {
       <div>
         <h1 className='max-w-2xl font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight '>
           <br />
-          We're redefining the way people shop.
+          We&apos;re redefining the way people shop.
         </h1>
         <p className='mt-8 max-w-xl text-lg leading-8 text-muted-foreground '>
           Experience sound like never before – shop premium speakers,
