@@ -1,0 +1,38 @@
+[
+  {
+    "name": "HomePod mini",
+    "company": "Apple",
+    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "featured": true,
+    "image": "https://images.pexels.com/photos/20323501/pexels-photo-20323501/free-photo-of-orange-ball-device.jpeg",
+    "price": 99,
+    "clerkId": "clerkId"
+  },
+  {
+    "name": "Onyx Studio 7",
+    "company": "Harman Kardon",
+    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "featured": true,
+    "image": "https://images.pexels.com/photos/20802445/pexels-photo-20802445/free-photo-of-loudspeaker-on-orange-background.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "price": 40,
+    "clerkId": "clerkId"
+  },
+  {
+    "name": "Smart Speaker",
+    "company": "Google",
+    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "featured": true,
+    "image": "https://images.pexels.com/photos/13696664/pexels-photo-13696664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "price": 75,
+    "clerkId": "clerkId"
+  },
+  {
+    "name": "PartyBox Encore",
+    "company": "JBL",
+    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "featured": false,
+    "image": "https://images.pexels.com/photos/20802528/pexels-photo-20802528/free-photo-of-loudspeaker-and-microphones-on-orange-background.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "price": 449,
+    "clerkId": "clerkId"
+  }
+]
