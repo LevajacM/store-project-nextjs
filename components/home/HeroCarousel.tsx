@@ -36,7 +36,7 @@ const HeroCarousel = () => {
               <CarouselItem key={i}>
                 <ThreeDCard
                   image={item.src}
-                  classes='bg-neutral-200 w-[522px] h-[24rem] rounded-xl object-cover pt-4 px-6 border border-black/[0.3]  '
+                  classes='bg-white w-[522px] h-[24rem] rounded-xl object-cover pt-4 px-6 border border-black/[0.3]  '
                   imageClasses='h-[21rem] '
                   imageItemClasses='border border-black/[0.3] dark:border-white/[0.3] rounded-xl'
                 >

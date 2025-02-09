@@ -1,10 +1,12 @@
 "use client";
 
 import { ThemeProvider } from "@/app/providers/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
+      <Toaster />
       <ThemeProvider
         attribute='class'
         defaultTheme='system'

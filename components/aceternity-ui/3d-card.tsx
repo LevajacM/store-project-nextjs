@@ -125,6 +125,8 @@ export const CardItem = ({
     handleAnimations();
   }, [isMouseEntered]);
 
+  // 126:6  Warning: React Hook useEffect has a missing dependency: 'handleAnimations'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps !!!!!!!!!!!!!!
+
   const handleAnimations = () => {
     if (!ref.current) return;
     if (isMouseEntered) {

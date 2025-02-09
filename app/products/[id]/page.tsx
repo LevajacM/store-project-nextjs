@@ -18,11 +18,11 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
       <BreadCrumbs name={product.name} />
       <div className='mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16'>
         {/* IMAGE */}
-        <div className=' h-[500px]'>
+        <div className='h-[250px] sm:h-[500px]'>
           <SingleProductCard
             image={image}
             alt={name}
-            contClasses='w-full h-[500px]'
+            contClasses='w-full h-[250px] sm:h-[500px]'
             imageItemClasses='h-full rounded-xl w-full'
             imageClasses='border border-primary'
             classes=' w-full   rounded-xl object-cover  border border-primary/[0.3] h-full '
@@ -30,7 +30,7 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
         </div>
         {/* INFO */}
         <div className='pt-4'>
-          <div className='relative flex flex-col gap-x-8 items-center border border-primary h-[500px] p-4 rounded-xl overflow-y-auto'>
+          <div className='relative flex flex-col gap-x-8 items-center border border-primary  lg:h-[500px] p-4 rounded-xl lg:overflow-y-auto'>
             <div>
               <h1 className='capitalize text-3xl font-bold pt-3'>{name}</h1>
             </div>

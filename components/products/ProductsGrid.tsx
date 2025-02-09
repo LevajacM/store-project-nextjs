@@ -23,7 +23,7 @@ const ProductsGrid = ({ products }: { products: Product[] }) => {
                 company={company}
                 price={price}
                 image={image}
-                classes='bg-gray-50 w-auto w-[22rem] sm:w-[22rem]  h-auto rounded-xl p-6'
+                classes='bg-gray-50 w-auto w-[19rem] sm:w-[22rem]  h-auto rounded-xl p-6 sm:max-w-xs'
                 imageClasses='h-60'
                 imageItemClasses='mt-4'
               />

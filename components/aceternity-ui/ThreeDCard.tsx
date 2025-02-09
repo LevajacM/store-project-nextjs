@@ -26,7 +26,7 @@ export function ThreeDCard({
   return (
     <CardContainer className='inter-var'>
       <CardBody
-        className={`relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] ${classes}   border`}
+        className={`relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  border ${classes}`}
       >
         <CardItem translateZ='50' className='text-xl font-bold text-orange-600'>
           {name}
@@ -34,14 +34,18 @@ export function ThreeDCard({
         <CardItem
           as='p'
           translateZ='60'
-          className='text-neutral-500 dark:text-white text-md max-w-sm mt-2 '
+          className='text-neutral-500 dark:text-white text-md max-w-sm mt-2 
+          sm:text-sm sm:max-w-xs
+          '
         >
           {company}
         </CardItem>
         <CardItem
           as='p'
           translateZ='70'
-          className='text-neutral-500 dark:text-neutral-300 text-sm max-w-sm mt-2 '
+          className='text-neutral-500 dark:text-neutral-300 text-sm max-w-sm mt-2 
+          sm:text-xs
+          '
         >
           {price ? `$${price}` : null}
         </CardItem>

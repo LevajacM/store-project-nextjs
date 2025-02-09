@@ -1,4 +1,4 @@
-import {heroui} from '@heroui/theme';
+import { heroui } from "@heroui/theme";
 // const {
 //   default: flattenColorPalette,
 // } = require("tailwindcss/lib/util/flattenColorPalette");
@@ -12,7 +12,7 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-    "./node_modules/@heroui/theme/dist/components/spinner.js"
+    "./node_modules/@heroui/theme/dist/components/spinner.js",
   ],
   prefix: "",
   theme: {
@@ -78,9 +78,12 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      screens: {
+        "sm-custom": "500px",
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"),heroui()],
+  plugins: [require("tailwindcss-animate"), heroui()],
 } satisfies Config;
 
 // function addVariablesForColors({ addBase, theme }: any) {
