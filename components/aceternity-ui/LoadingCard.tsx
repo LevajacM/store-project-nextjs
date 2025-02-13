@@ -5,13 +5,15 @@ const LoadingThreeDCard = ({
   classes,
   imageClasses,
   imageItemClasses,
+  contClass,
 }: {
   classes: string;
   imageClasses?: string;
   imageItemClasses?: string;
+  contClass?: string;
 }) => {
   return (
-    <CardContainer className='inter-var'>
+    <CardContainer className={`inter-var ${contClass}`}>
       <CardBody
         className={`relative group/card   dark:bg-black dark:border-white/[0.2] border-black/[0.1] ${classes}   border`}
       >

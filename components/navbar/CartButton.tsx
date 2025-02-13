@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { GrCart } from "react-icons/gr";
+import { fetchCartItems } from "@/utils/actions";
 
 const CartButton = async () => {
-  const numItemsInCart = 9;
+  const numItemsInCart = await fetchCartItems();
 
   return (
     <Button

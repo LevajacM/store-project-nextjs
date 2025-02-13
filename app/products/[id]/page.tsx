@@ -1,5 +1,6 @@
 import BreadCrumbs from "@/components/single-product/BreadCrumbs";
-import { fetchSingleProduct } from "@/utils/actions";
+import { fetchSingleProduct, findExistingReview } from "@/utils/actions";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/format";
 import FavoriteToggleButton from "@/components/products/FavoriteToggleButton";
@@ -7,11 +8,20 @@ import AddToCart from "@/components/single-product/AddToCart";
 import ProductRating from "@/components/single-product/ProductRating";
 import SingleProductCard from "@/components/aceternity-ui/SingleProductCard";
 import { ListCard } from "@/components/aceternity-ui/list-card";
+import ShareButton from "@/components/single-product/ShareButton";
+import SubmitReview from "@/components/reviews/SubmitReview";
+import ProductReviews from "@/components/reviews/ProductReviews";
 
 const SingleProductPage = async ({ params }: { params: { id: string } }) => {
   const product = await fetchSingleProduct(params.id);
   const { name, image, company, description, price } = product;
   const dollarsPrice = formatCurrency(price);
+
+  const { userId } = auth();
+  const productId = product.id;
+
+  const reviewDoesNotExist =
+    userId && !(await findExistingReview(userId, productId));
 
   return (
     <section>
@@ -34,7 +44,7 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
             <div>
               <h1 className='capitalize text-3xl font-bold pt-3'>{name}</h1>
             </div>
-            <ProductRating id={params.id} />
+            <ProductRating productId={params.id} />
             <h4 className='text-xl mt-2'>{company}</h4>
             <p className='mt-3 text-md bg-muted inline-block p-2 rounded-md'>
               {dollarsPrice}
@@ -43,12 +53,15 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
               {description}
             </p>
             <AddToCart id={params.id} />
-            <div className='absolute top-7 right-6'>
+            <div className='flex items-center gap-x-2 absolute top-7 right-6'>
               <FavoriteToggleButton productId={params.id} />
+              <ShareButton productId={params.id} name={name} />
             </div>
           </div>
         </div>
       </div>
+      <ProductReviews productId={params.id} />
+      {reviewDoesNotExist && <SubmitReview productId={params.id} />}
     </section>
   );
 };

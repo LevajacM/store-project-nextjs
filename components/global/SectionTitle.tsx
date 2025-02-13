@@ -16,7 +16,7 @@ const SectionTitle = ({
       <div className={`flex flex-col  justify-center ${titleClass}`}>
         <TypewriterEffectSmooth words={words} />
       </div>
-      <Separator />
+      <Separator className='mb-8' />
     </>
   );
 };
