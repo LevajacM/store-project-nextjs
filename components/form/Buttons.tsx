@@ -29,7 +29,7 @@ export const SubmitBtn = ({
 
   if (pending) {
     return (
-      <Button disabled variant='secondary' size={size}>
+      <Button disabled variant='secondary' size={size} className={className}>
         <ReloadIcon className='mr-2 h-4 w-4  animate-spin' />
         {text2}
       </Button>
@@ -37,7 +37,7 @@ export const SubmitBtn = ({
   }
 
   return (
-    <Button type='submit' variant='default' size={size}>
+    <Button type='submit' variant='default' size={size} className={className}>
       {text}
     </Button>
   );

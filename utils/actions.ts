@@ -3,7 +3,6 @@
 import { redirect } from "next/navigation";
 import prisma from "./db";
 import { currentUser, auth } from "@clerk/nextjs/server";
-
 import {
   zodValidation,
   imageSchema,
@@ -13,6 +12,7 @@ import {
 import { deleteImage, uploadImage } from "./supabase";
 import { ZodSchema } from "zod";
 import { revalidatePath } from "next/cache";
+import { Cart } from "@prisma/client";
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -367,16 +367,266 @@ export const fetchCartItems = async () => {
   return cart?.numItemsInCart || 0;
 };
 
-const fetchProduct = async () => {};
+const fetchProduct = async (productId: string) => {
+  const product = await prisma.product.findUnique({
+    where: {
+      id: productId,
+    },
+  });
+  if (!product) {
+    throw new Error("No such product");
+  }
+  return product;
+};
 
-export const fetchOrCreateCart = async () => {};
+const includeProductClause = {
+  cartItems: {
+    include: {
+      product: true,
+    },
+  },
+};
 
-const updateOrCreateCartItem = async () => {};
+export const fetchOrCreateCart = async ({
+  userId,
+  errorOnFailure = false,
+}: {
+  userId: string;
+  errorOnFailure?: boolean;
+}) => {
+  let cart = await prisma.cart.findFirst({
+    where: {
+      clerkId: userId,
+    },
+    // includeProductClause!! {
+    //   cartItems: {
+    //     include: {
+    //       product: true,
+    //     },
+    //   },
+    // },
+    include: includeProductClause,
+  });
+  if (!cart && errorOnFailure) {
+    throw new Error("Cart not found");
+  }
+  if (!cart) {
+    cart = await prisma.cart.create({
+      data: {
+        clerkId: userId,
+      },
+      include: includeProductClause,
+    });
+  }
 
-export const updateCart = async () => {};
+  return cart;
+};
 
-export const addToCartAction = async () => {};
+const updateOrCreateCartItem = async ({
+  productId,
+  cartId,
+  amount,
+}: {
+  productId: string;
+  cartId: string;
+  amount: number;
+}) => {
+  let cartItem = await prisma.cartItem.findFirst({
+    where: {
+      productId,
+      cartId,
+    },
+  });
+  if (cartItem) {
+    cartItem = await prisma.cartItem.update({
+      where: {
+        id: cartItem.id,
+      },
+      data: {
+        amount: cartItem.amount + amount,
+      },
+    });
+  } else {
+    cartItem = await prisma.cartItem.create({
+      data: { amount, productId, cartId },
+    });
+  }
+};
 
-export const removeCartItemAction = async () => {};
+export const updateCart = async (cart: Cart) => {
+  const cartItems = await prisma.cartItem.findMany({
+    where: {
+      cartId: cart.id,
+    },
+    include: {
+      product: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
 
-export const updateCartItemAction = async () => {};
+  let numItemsInCart = 0;
+  let cartTotal = 0;
+
+  for (const item of cartItems) {
+    numItemsInCart += item.amount;
+    cartTotal += item.amount * item.product.price;
+  }
+
+  const tax = cart.taxRate * cartTotal;
+  const shipping = cartTotal ? cart.shipping : 0;
+  const orderTotal = cartTotal + tax + shipping;
+
+  const currentCart = await prisma.cart.update({
+    where: {
+      id: cart.id,
+    },
+    data: {
+      numItemsInCart,
+      cartTotal,
+      tax,
+      orderTotal,
+    },
+    include: includeProductClause,
+  });
+
+  return { cartItems, currentCart };
+};
+
+export const addToCartAction = async (prevState: any, formData: FormData) => {
+  const user = await getAuthUser();
+
+  try {
+    const productId = formData.get("productId") as string;
+    const amount = Number(formData.get("amount"));
+
+    await fetchProduct(productId);
+    const cart = await fetchOrCreateCart({ userId: user.id });
+
+    await updateOrCreateCartItem({ productId, cartId: cart.id, amount });
+
+    await updateCart(cart);
+  } catch (error) {
+    return throwError(error);
+  }
+  redirect("/cart");
+};
+
+export const removeCartItemAction = async (
+  prevState: any,
+  formData: FormData
+) => {
+  const user = await getAuthUser();
+  try {
+    const cartItemId = formData.get("id") as string;
+    const cart = await fetchOrCreateCart({
+      userId: user.id,
+      errorOnFailure: true,
+    });
+    await prisma.cartItem.delete({
+      where: {
+        id: cartItemId,
+        cartId: cart.id,
+      },
+    });
+    await updateCart(cart);
+    revalidatePath("/cart");
+    return { message: "item removed from cart" };
+  } catch (error) {
+    return throwError(error);
+  }
+};
+
+export const updateCartItemAction = async ({
+  amount,
+  cartItemId,
+}: {
+  amount: number;
+  cartItemId: string;
+}) => {
+  const user = await getAuthUser();
+  try {
+    const cart = await fetchOrCreateCart({
+      userId: user.id,
+      errorOnFailure: true,
+    });
+    await prisma.cartItem.update({
+      where: {
+        id: cartItemId,
+        cartId: cart.id,
+      },
+      data: {
+        amount,
+      },
+    });
+    await updateCart(cart);
+    revalidatePath("/cart");
+    return { message: "cart updated" };
+  } catch (error) {
+    return throwError(error);
+  }
+};
+
+export const createOrderAction = async (prevState: any, formData: FormData) => {
+  const user = await getAuthUser();
+  let orderId: null | string = null;
+  let cartId: null | string = null;
+
+  try {
+    const cart = await fetchOrCreateCart({
+      userId: user.id,
+      errorOnFailure: true,
+    });
+
+    cartId = cart.id;
+    await prisma.order.deleteMany({
+      where: {
+        clerkId: user.id,
+        isPaid: false,
+      },
+    });
+
+    const order = await prisma.order.create({
+      data: {
+        clerkId: user.id,
+        products: cart.numItemsInCart,
+        orderTotal: cart.orderTotal,
+        tax: cart.tax,
+        shipping: cart.shipping,
+        email: user.emailAddresses[0].emailAddress,
+      },
+    });
+    orderId = order.id;
+  } catch (error) {
+    return throwError(error);
+  }
+  redirect(`/checkout?orderId=${orderId}&cartId=${cartId}`);
+};
+
+export const fetchUserOrders = async () => {
+  const user = await getAuthUser();
+  const orders = await prisma.order.findMany({
+    where: {
+      clerkId: user.id,
+      isPaid: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return orders;
+};
+
+export const fetchAdminOrders = async () => {
+  const user = getAdminUser();
+  const orders = await prisma.order.findMany({
+    where: {
+      isPaid: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return orders;
+};

@@ -4,7 +4,7 @@ import HeroCarousel from "./HeroCarousel";
 
 const Hero = () => {
   return (
-    <section className='grid grid-cols-1 lg:grid-cols-2 gap-24 items-center'>
+    <section className='grid grid-cols-1 xl:grid-cols-2 gap-24 items-center'>
       <div>
         <h1 className='max-w-2xl font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight '>
           <br />

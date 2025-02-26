@@ -23,15 +23,4 @@ const SectionTitle = ({
 
 export default SectionTitle;
 
-// const words = [
-//   {
-//     text: "neki",
-//   },
-//   {
-//     text: "neki",
-//   },
-//   {
-//     text: "naslov",
-//     className: "text-blue-500 dark:text-orange-500",
-//   },
-// ];
+// words={[{text: "neki"},{text: "neki"},{text:"naslov", className: "text-orange-500 dark:text-orange-500"}]}

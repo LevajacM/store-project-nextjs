@@ -19,7 +19,7 @@ const HeroCarousel = () => {
   console.log(hero1.src);
 
   return (
-    <div className='hidden lg:block'>
+    <div className='hidden xl:block'>
       <Carousel>
         <CarouselContent>
           <CarouselItem key={5}>

@@ -13,7 +13,7 @@ const LoadingContainer = () => {
 const LoadingProduct = () => {
   return (
     <LoadingThreeDCard
-      classes='bg-gray-50 w-auto sm:w-[22rem]  h-[394px] rounded-xl p-6'
+      classes='bg-gray-50 w-[50vw] sm:w-[22rem]  h-[394px] rounded-xl p-6'
       imageClasses='flex justify-center mt-36'
     />
   );

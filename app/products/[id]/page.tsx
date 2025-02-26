@@ -28,19 +28,19 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
       <BreadCrumbs name={product.name} />
       <div className='mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16'>
         {/* IMAGE */}
-        <div className='h-[250px] sm:h-[500px]'>
+        <div className='h-[250px] sm:h-[550px]'>
           <SingleProductCard
             image={image}
             alt={name}
-            contClasses='w-full h-[250px] sm:h-[500px]'
+            contClasses='w-full h-[250px] sm:h-[600px]'
             imageItemClasses='h-full rounded-xl w-full'
             imageClasses='border border-primary'
-            classes=' w-full   rounded-xl object-cover  border border-primary/[0.3] h-full '
+            classes=' w-full   rounded-xl object-center object-cover  border border-primary/[0.3] h-full '
           />
         </div>
         {/* INFO */}
         <div className='pt-4'>
-          <div className='relative flex flex-col gap-x-8 items-center border border-primary  lg:h-[500px] p-4 rounded-xl lg:overflow-y-auto'>
+          <div className='relative flex flex-col gap-x-8 items-center border border-primary h-fit  lg:h-[600px] p-4 rounded-xl lg:overflow-y-auto'>
             <div>
               <h1 className='capitalize text-3xl font-bold pt-3'>{name}</h1>
             </div>
@@ -52,7 +52,7 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
             <p className='mt-6 leading-8 px-2  text-muted-foreground '>
               {description}
             </p>
-            <AddToCart id={params.id} />
+            <AddToCart productId={params.id} />
             <div className='flex items-center gap-x-2 absolute top-7 right-6'>
               <FavoriteToggleButton productId={params.id} />
               <ShareButton productId={params.id} name={name} />
