@@ -20,8 +20,9 @@ const ReviewCard = ({ reviewInfo, children }: ReviewCardProps) => {
       comment={<Comment comment={reviewInfo.comment} />}
       image={reviewInfo.image}
       classes='w-full'
-      children={children}
-    />
+    >
+      {children}
+    </Review3DCard>
   );
 };
 
