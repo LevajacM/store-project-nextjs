@@ -23,7 +23,7 @@ const ReviewsPage = async () => {
         />
         <section className='grid md:grid-cols-2 gap-8 mt-4'>
           <h4 className='text-xs sm:text-sm md:text-lg lg:text-xl'>
-            You don't have any reviews...
+            You don&apos;t have any reviews...
           </h4>
         </section>
       </>
